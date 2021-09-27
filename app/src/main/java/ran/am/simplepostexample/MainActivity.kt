@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val responseText = findViewById<View>(R.id.textView) as TextView
-
         val apiInterface = APIClient().getClient()?.create(APIInterface::class.java)
         val progressDialog = ProgressDialog(this@MainActivity)
         progressDialog.setMessage("Please wait")
@@ -27,25 +26,18 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(
                     call: Call<List<Users.UserDetails>>,
                     response: Response<List<Users.UserDetails>>) {
-                 //   onResult(response.body())
                     progressDialog.dismiss()
-                    Log.i("zsdfg", "onResponse: "+response.body())
-
                     var stringToBePritined:String? = "";
                     for(User in response.body()!!){
                         stringToBePritined = stringToBePritined +User.name+ "\n"+User.location + "\n"+"\n"
                     }
                     responseText.text= stringToBePritined
-
                 }
                 override fun onFailure(call: Call<List<Users.UserDetails>>, t: Throwable) {
                   //  onResult(null)
                     progressDialog.dismiss()
-                    Log.i("zsdfg", "oner: "+t.message)
-
                     Toast.makeText(applicationContext, ""+t.message, Toast.LENGTH_SHORT).show();
                 }
-
             })
         }
 

@@ -21,19 +21,16 @@ class NewUser : AppCompatActivity() {
         val location = findViewById<View>(R.id.editTextTextPersonName2) as EditText
         val savebtn = findViewById<View>(R.id.button) as Button
 
+        savebtn.setOnClickListener {
 
-    savebtn.setOnClickListener {
+            var f = Users.UserDetails(name.text.toString(), location.text.toString())
 
-
-        var f = Users.UserDetails(name.text.toString(), location.text.toString())
-
-        addSingleuser(f, onResult = {
-            name.setText("")
-            location.setText("")
-            Toast.makeText(applicationContext, "Save Success!", Toast.LENGTH_SHORT).show();
-        })
-
-    }
+            addSingleuser(f, onResult = {
+                name.setText("")
+                location.setText("")
+                Toast.makeText(applicationContext, "Save Success!", Toast.LENGTH_SHORT).show();
+            })
+        }
     }
 
     private fun addSingleuser(f: Users.UserDetails, onResult: () -> Unit) {
@@ -53,6 +50,7 @@ class NewUser : AppCompatActivity() {
                     onResult()
                     progressDialog.dismiss()
                 }
+
                 override fun onFailure(call: Call<Users.UserDetails>, t: Throwable) {
                     onResult()
                     Toast.makeText(applicationContext, "Error!", Toast.LENGTH_SHORT).show();
@@ -62,6 +60,7 @@ class NewUser : AppCompatActivity() {
             })
         }
     }
+
     fun addnew(view: android.view.View) {
         intent = Intent(applicationContext, NewUser::class.java)
         startActivity(intent)
@@ -70,6 +69,5 @@ class NewUser : AppCompatActivity() {
     fun viewusers(view: android.view.View) {
         intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
-
     }
 }
